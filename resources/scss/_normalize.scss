@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+
+    -webkit-tap-highlight-color: transparent;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    color: #212121;
+}
+
+img, iframe, video {
+    max-width: 100%;
+    object-fit: cover;
+}
+
+img {
+    height: auto;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 25px 0 15px;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 25px 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #3291ff;
+
+    &:visited {
+        color: #3291ff;
+    }
+}

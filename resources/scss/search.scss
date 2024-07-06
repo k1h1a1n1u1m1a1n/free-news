@@ -1,0 +1,23 @@
+input[name=s] {
+    width: 100%;
+    padding: 10px 10px 10px 48px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 17px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    display: block;
+    appearance: none;
+}
+
+.input-wrapper {
+    position: relative;
+
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+    }
+}
