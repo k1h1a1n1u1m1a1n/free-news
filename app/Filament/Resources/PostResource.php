@@ -30,7 +30,6 @@ class PostResource extends Resource
                             ->required()
                             ->placeholder('Enter the title of the post'),
                         Forms\Components\TextInput::make('slug')
-                            ->label('Title')
                             ->required(),
                         Forms\Components\RichEditor::make('content')
                             ->label('Content')
@@ -43,8 +42,42 @@ class PostResource extends Resource
                         Forms\Components\Select::make('tags')
                             ->relationship('tags', 'name')
                             ->multiple(),
-                        Forms\Components\Repeater::make('meta')
+
                     ]),
+
+                Forms\Components\Section::make('Meta Information')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('meta.time')
+                            ->label('Time')
+                            ->placeholder('Enter the time of the post'),
+                        Forms\Components\TextInput::make('meta.source_name')
+                            ->label('Source Name')
+                            ->placeholder('Enter the source name of the post'),
+                        Forms\Components\TextInput::make('meta.source_url')
+                            ->label('Source URL')
+                            ->placeholder('Enter the source URL of the post'),
+                        Forms\Components\TextInput::make('meta.main_image')
+                            ->label('Source Image'),
+                    ]),
+                Forms\Components\Section::make('Images')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('images.xs')
+                            ->label('Extra Small Image'),
+                        Forms\Components\TextInput::make('images.s')
+                            ->label('Small Image'),
+                        Forms\Components\TextInput::make('images.sqr')
+                            ->label('Square Image'),
+                        Forms\Components\TextInput::make('images.webp.xs')
+                            ->label('Extra Small WebP Image'),
+                        Forms\Components\TextInput::make('images.webp.s')
+                            ->label('Small WebP Image'),
+
+                        Forms\Components\TextInput::make('images.webp.sqr')
+                            ->label('Square WebP Image'),
+                    ]),
+
             ]);
     }
 
@@ -55,14 +88,12 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-
-
-                Tables\Columns\TextColumn::make('time')
+                Tables\Columns\TextColumn::make('created_at')
                     ->searchable()
                     ->sortable(),
             ])
             ->filters([
-                //
+                // Created at filter
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

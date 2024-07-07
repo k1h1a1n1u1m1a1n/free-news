@@ -11,7 +11,7 @@
     <!-- Open Graph Tags -->
     <meta property="og:title" content="{{ $post['title'] }}">
     <meta property="og:description" content="{{ $post['short_content'] }}">
-    <meta property="og:image" content="{{asset('storage/' . $post['images']['l'])}}">
+    <meta property="og:image" content="{{Storage::disk('s3')->url($post['images']['s'])}}">
     <meta property="og:url" content="{{ url($post['slug']) }}">
     <meta property="og:type" content="article">
 
@@ -19,7 +19,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $post['title'] }}">
     <meta name="twitter:description" content="{{ $post['short_content'] }}">
-    <meta name="twitter:image" content="{{asset('storage/' . $post['images']['l'])}}">
+    <meta name="twitter:image" content="{{Storage::disk('s3')->url($post['images']['s'])}}">
 
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
@@ -32,27 +32,25 @@
       },
       "headline": "{{ $post['title'] }}",
       "image": [
-        "{{asset('storage/' . $post['images']['s'])}}",
-        "{{asset('storage/' . $post['images']['l'])}}"
+        "{{Storage::disk('s3')->url($post['images']['s'])}}"
       ],
       "description": "{{ $post['short_content'] }}"
     }
-
-
-
     </script>
+    <link rel="preload" href="{{Storage::disk('s3')->url($post['images']['webp']['s'])}}" as="image">
+
 @endsection
 
 @section('content')
     <article>
-
-        <div class="post-image-content loading-blur">
-            <img width="370" height="233" class="post-image"
-                 src="{{Storage::disk('s3')->url($post['images']['xs'])}}"
-                 alt="{{Str::limit($post['title'], 20, '')}}"
-                 data-image="{{Storage::disk('s3')->url($post['images']['s'])}}"
-                 data-webp="{{Storage::disk('s3')->url($post['images']['webp']['s'])}}"
-            >
+        <div class="post-image-content" style="background-color: #d5d5d5;">
+            <picture>
+                <source type="image/webp"  srcset="{{Storage::disk('s3')->url($post['images']['webp']['s'])}}">
+                <img width="370" height="233" class="post-image"
+                     src="{{Storage::disk('s3')->url($post['images']['s'])}}"
+                     alt="{{Str::limit($post['title'], 20, '')}}"
+                >
+            </picture>
             <div class="like @if($isLiked) {{'liked'}} @endif">
                 <svg width="25" height="25" viewBox="0 0 24 24" fill="#fff">
                     <path

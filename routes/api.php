@@ -26,10 +26,15 @@ use Intervention\Image\ImageManager;
 |
 */
 
+
 Route::post('/post', function (Request $request) {
     $data = $request->all();
 
-    Post::where('title', $data['title'])->delete();
+
+    $post = Post::where('title', $data['title'])->first();
+    if ($post) {
+        return response()->json(['error' => 'Post with this title already exists']);
+    }
 // Create necessary directories
     foreach (['full', 's', 'xs', 'sqr'] as $dir) {
         Storage::makeDirectory("public/posts/$dir");
@@ -48,12 +53,9 @@ Route::post('/post', function (Request $request) {
 // Define sizes and paths
     $sizes = [
         's' => 600,
-        'xs' => 100,
         'sqr' => [150, 150]
     ];
-    $paths = [
-        'full' => $imageName
-    ];
+    $paths = [];
 
 // Process images
     foreach ($sizes as $key => $size) {
@@ -81,14 +83,10 @@ Route::post('/post', function (Request $request) {
     Storage::delete(array_map(fn($path) => "public/$path", $paths));
 
     $images = [
-        "xs" => $paths['xs'],
         "s" => $paths['s'],
-        "l" => $paths['full'],
         "sqr" => $paths['sqr'],
         "webp" => [
-            "xs" => $paths['webp_xs'],
             "s" => $paths['webp_s'],
-            "l" => $paths['webp_full'],
             "sqr" => $paths['webp_sqr'],
         ]
     ];
@@ -102,6 +100,7 @@ Route::post('/post', function (Request $request) {
             'time' => $data['time'],
             'source_name' => $data['source_name'],
             'source_url' => $data['source_url'],
+            'main_image' => $data['image'],
         ]
     ]);
 

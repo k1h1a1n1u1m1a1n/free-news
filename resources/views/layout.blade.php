@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="{{config('filesystems.disks.s3.url')}}">
-    <link rel="dns-prefetch" href="{{config('filesystems.disks.s3.url')}}">
+    <link rel="dns-prefetch" href="//d30htgc3wcnpj1.cloudfront.net">
+
+    <link rel="preconnect" href="//d30htgc3wcnpj1.cloudfront.net">
 
     @yield('head')
 
